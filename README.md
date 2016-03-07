@@ -1,2 +1,4 @@
-# symfony-sonata-admin
-A Boilerplate with Symfony 2.8 configured with Sonata Admin Bundle 2.3 stable.
+disruptr
+========
+
+A Symfony project created on March 6, 2016, 8:40 pm.
