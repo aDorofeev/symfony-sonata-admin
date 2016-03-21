@@ -17,8 +17,9 @@ The easiest way to get started is to clone the repository:
 
 ```bash
 # Get the latest snapshot
-$ git clone https://github.com/numerogeek/symfony-sonata-admin myproject
+$ mkdir myproject
 $ cd myproject
+$ git clone https://github.com/numerogeek/symfony-sonata-admin ./
 $ git remote rm origin
 
 #setup ACL (refer to the symfony documentation.
