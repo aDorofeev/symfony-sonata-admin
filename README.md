@@ -26,18 +26,8 @@ $ HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | gre
 $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
-#composer install
-
-$composer install
-
-#install assets
-
-$ php app/console assets:install --symlink
-
-#Create schema
-
-$ php app/console doctrine:database:create
-$ php app/console doctrine:fixtures:load
+make
+make install
 
 # A superadmin user is created with the fixtures with username `admin` and password `admin`
 
