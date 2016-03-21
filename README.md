@@ -18,7 +18,7 @@ The easiest way to get started is to clone the repository:
 # Get the latest snapshot
 $ mkdir myproject
 $ cd myproject
-$ git clone https://github.com/numerogeek/symfony-sonata-admin ./
+$ git clone https://github.com/AlexWoroschilow/symfony-sonata-admin.git ./
 $ git remote rm origin
 $ make
 $ make install
