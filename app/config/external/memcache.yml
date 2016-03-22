@@ -1,0 +1,7 @@
+lsw_memcache:
+    session:
+        pool: default
+    pools:
+        default:
+            servers:
+              - { host: localhost, tcp_port: 11211 }

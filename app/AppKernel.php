@@ -18,7 +18,9 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            //Sonata Bundle
+            new Lsw\MemcacheBundle\LswMemcacheBundle(),
+
+	    //Sonata Bundle
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
