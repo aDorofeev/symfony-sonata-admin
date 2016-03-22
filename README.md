@@ -15,9 +15,9 @@ This boilerplate comes with all the Sonata bundles enabled and preconfigured
 The easiest way to get started is to clone the repository:
 
 ```bash
-# Get the latest snapshot
 $ mkdir myproject
 $ cd myproject
+# Get the latest snapshot
 $ git clone https://github.com/AlexWoroschilow/symfony-sonata-admin.git ./
 $ git remote rm origin
 $ make
