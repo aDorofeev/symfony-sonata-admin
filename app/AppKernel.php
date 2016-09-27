@@ -17,8 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-	    new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Lsw\MemcacheBundle\LswMemcacheBundle(),
+	        new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 
 	    //Sonata Bundle
             new Sonata\CoreBundle\SonataCoreBundle(),
