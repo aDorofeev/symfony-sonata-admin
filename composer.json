@@ -1,5 +1,5 @@
 {
-    "name": "sensey/symfony-prototype",
+    "name": "numerogeek/symfony-sonata-prototype",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -22,12 +22,11 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "sensio/generator-bundle": "~2.3",
-        "sonata-project/admin-bundle": "~2.3",
-        "sonata-project/doctrine-orm-admin-bundle": "~2.3",
-        "sonata-project/user-bundle": "^2.2",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^1.1",
-        "leaseweb/memcache-bundle": "^2.1"
+        "sonata-project/admin-bundle": "^3.0",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.0",
+        "sonata-project/user-bundle": "^3.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "~2.7"
