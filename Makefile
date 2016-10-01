@@ -5,8 +5,6 @@ ready:
 	php composer.phar self-update
 
 install:
-	@echo "create database schema"
-	php app/console doctrine:database:create
 	@echo "install vendors"
 	php composer.phar install
 	@echo "create assets dump"

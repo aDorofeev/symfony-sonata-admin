@@ -30,6 +30,10 @@ $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 $ make
 $ make install
 # A superadmin user is created with the fixtures with username `admin` and password `admin`
+# if an error occurs, try :
+$ php app/console doctrine:database:create
+# and again
+# make install
 
 And if you need it:
 $ php app/console server:run
