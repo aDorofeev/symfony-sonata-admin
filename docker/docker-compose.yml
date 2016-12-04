@@ -1,0 +1,73 @@
+version: '2'
+
+volumes:
+    symfony_logs:
+        driver: local
+    symfony_cache:
+        driver: local
+    nginx_logs:
+        driver: local
+    mysql_data:
+        driver: local
+    redis_data:
+        driver: local
+    ssh_profile:
+        driver: local
+
+
+services:
+    # workaround for docker issue https://github.com/docker/docker/issues/2259
+    data:
+        image: debian:jessie
+        volumes:
+            - ..:/var/www/symfony
+#            - symfony_logs:/var/www/symfony/app/logs
+#            - symfony_cache:/var/www/symfony/app/cache
+            - ../app/data/mysql:/var/lib/mysql
+            - ../app/data/redis:/data
+        command: bash -c "chown -R 1000:33 /var/www/symfony/app/cache; chown -R 1000:33 /var/www/symfony/app/logs; chown -R 999:999 /var/lib/mysql; chown -R 999:999 /data; sleep 300"
+        tty: true
+        stdin_open: true
+    php:
+        build: ./php-fpm
+        depends_on:
+          - data
+        volumes_from:
+          - data:rw
+        volumes:
+            - symfony_cache:/var/log/nginx
+        tty: true
+        stdin_open: true
+    nginx:
+        build: ./nginx
+        depends_on:
+          - data
+          - php
+        ports:
+            - 80:80
+        volumes_from:
+            - data:ro
+#        volumes:
+#            - nginx_logs:/var/log/nginx
+    db:
+        build: ./mysql 
+        depends_on:
+          - data
+        volumes_from:
+            - data:rw
+        expose:
+            - 3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: password
+    redis:
+        build: ./redis
+        depends_on:
+          - data
+        volumes_from:
+          - data:rw
+        expose:
+            - 6379
+
