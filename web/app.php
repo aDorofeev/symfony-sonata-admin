@@ -2,6 +2,8 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+require __DIR__.'/../app/entrypoint_inc.php';
+
 /**
  * @var Composer\Autoload\ClassLoader
  */
