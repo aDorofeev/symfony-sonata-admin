@@ -32,7 +32,7 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
 
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
-
+            new Snc\RedisBundle\SncRedisBundle(),
 
         );
 
