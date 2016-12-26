@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 SCRIPT_PATH="$0"
+ARGS="$@"
 COMPOSER_DIR="$HOME/.bin"
 COMPOSER_PATH="$COMPOSER_DIR/composer.phar"
 
 if [ "$(whoami)" == 'root' ] ; then
-    su -s /bin/bash - www-data -c "$SCRIPT_PATH $@"
+    su -s /bin/bash - www-data -c "$SCRIPT_PATH $ARGS"
 else
 
     if [ ! -f "$COMPOSER_PATH" ] ; then
@@ -17,5 +18,5 @@ else
         php -r "unlink('composer-setup.php');"
     fi
 
-    bash -c "cd /var/www/symfony; $COMPOSER_PATH $@"
+    bash -c "cd /var/www/symfony; $COMPOSER_PATH $ARGS"
 fi
