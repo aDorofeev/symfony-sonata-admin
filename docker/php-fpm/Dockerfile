@@ -29,7 +29,11 @@ RUN sed -i "/listen = .*/c\listen = [::]:9000" /etc/php/7.0/fpm/pool.d/www.conf 
     && sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php/7.0/fpm/php-fpm.conf \
     && usermod -u 1000 www-data
 
-RUN ln -s /var/www/symfony/app/console /usr/bin/sfconsole
+RUN mkdir -p /var/www
+RUN chown -R www-data:1000 /var/www
+
+ADD sfconsole /usr/bin/
+ADD composer /usr/bin/
 
 CMD ["/usr/sbin/php-fpm7.0"]
 

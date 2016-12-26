@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+COMMAND="/var/www/symfony/app/console $@"
+
+if [ ! "$(whoami)" == 'www-data' ] ; then
+    su -s /bin/bash - www-data -c "$COMMAND"
+else
+    bash -c "$COMMAND"
+fi
