@@ -3,7 +3,7 @@
 COMMAND="/var/www/symfony/app/console $@"
 
 if [ ! "$(whoami)" == 'www-data' ] ; then
-    su -s /bin/bash - www-data -c "$COMMAND"
+    su -s /bin/bash - www-data -c "cd /var/www/symfony; $COMMAND"
 else
-    bash -c "$COMMAND"
+    bash -c "cd /var/www/symfony; $COMMAND"
 fi
