@@ -27,7 +27,12 @@ RUN sed -i "/listen = .*/c\listen = [::]:9000" /etc/php/7.0/fpm/pool.d/www.conf 
     && sed -i "/pid = .*/c\;pid = /run/php/php7.0-fpm.pid" /etc/php/7.0/fpm/php-fpm.conf \
     && sed -i "/;daemonize = .*/c\daemonize = no" /etc/php/7.0/fpm/php-fpm.conf \
     && sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php/7.0/fpm/php-fpm.conf \
+    && sed -i "/;request_slowlog_timeout = .*/c\request_slowlog_timeout = 5s" /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i "/;slowlog = .*/c\slowlog = /var/log/\$pool.log.slow" /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i "s/;\(slowlog = .*\)/\\1/g" /etc/php/7.0/fpm/pool.d/www.conf \
     && usermod -u 1000 www-data
+
+#RUN ln -s /var/log/www.log.slow /dev/stdout
 
 RUN mkdir -p /var/www
 RUN chown -R www-data:1000 /var/www

@@ -35,3 +35,13 @@ symbolic-links=0
 
 # Disable native aio for 9p support
 innodb_use_native_aio=0
+
+collation-server = utf8mb4_unicode_ci
+character-set-server = utf8mb4
+init-connect='SET NAMES utf8mb4'
+
+[client]
+default-character-set=utf8mb4
+
+[mysql]
+default-character-set=utf8mb4
