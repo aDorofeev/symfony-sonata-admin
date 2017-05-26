@@ -11,6 +11,9 @@ volumes:
         driver: local
     redis_data:
         driver: local
+    ssh_profile:
+        driver: local
+
 
 services:
     # workaround for docker issue https://github.com/docker/docker/issues/2259
@@ -22,32 +25,26 @@ services:
 #            - symfony_cache:/var/www/symfony/app/cache
             - ./app/data/mysql:/var/lib/mysql
             - ./app/data/redis:/data
-        command: bash -c "chown -R 1000:33 /var/www/symfony/app/cache; chown -R 1000:33 /var/www/symfony/app/logs; chown -R 999:999 /var/lib/mysql; chown -R 999:999 /data; sleep 30"
+        command: bash -c "chown -R 1000:33 /var/www/symfony/app/cache; chown -R 1000:33 /var/www/symfony/app/logs; chown -R 999:999 /var/lib/mysql; chown -R 999:999 /data; sleep 120"
         tty: true
         stdin_open: true
     php:
         restart: always
         build: ./docker/php-fpm
         depends_on:
-            - data
+          - data
         volumes_from:
-            - data:rw
+          - data:rw
         volumes:
             - symfony_cache:/var/log/nginx
-        security_opt:
-            - seccomp:unconfined
         tty: true
         stdin_open: true
-        networks:
-            - default
-        cap_add:
-            - SYS_PTRACE
     nginx:
         restart: always
         build: ./docker/nginx
         depends_on:
-            - data
-            - php
+          - data
+          - php
         expose:
             - 80
         volumes_from:
@@ -67,7 +64,7 @@ services:
         restart: always
         build: ./docker/mysql
         depends_on:
-            - data
+          - data
         volumes_from:
             - data:rw
         expose:
@@ -77,10 +74,11 @@ services:
             MYSQL_DATABASE: symfony
             MYSQL_USER: symfony
             MYSQL_PASSWORD: password
-        tty: true
-        stdin_open: true
-        networks:
-            - default
+    rabbit:
+        image: adorofeev/rabbitmq-delayed
+        expose:
+            - 5672
+            - 15672
     redis:
         restart: always
         build: ./docker/redis
@@ -90,11 +88,8 @@ services:
           - data:rw
         expose:
             - 6379
-        networks:
-            - default
 
 networks:
     proxy-tier:
         external:
             name: nginx-proxy
-
