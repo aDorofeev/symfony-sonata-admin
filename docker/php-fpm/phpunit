@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+SCRIPT_PATH="$0"
+ARGS="$@"
+INSTALL_DIR="$HOME/.bin"
+INSTALL_PATH="$INSTALL_DIR/phpunit.phar"
+SOURCE_URL="https://phar.phpunit.de/phpunit-6.0.phar"
+
+if [ "$(whoami)" == 'root' ] ; then
+    su -s /bin/bash - www-data -c "$SCRIPT_PATH $ARGS"
+else
+
+    if [ ! -f "$INSTALL_PATH" ] ; then
+        mkdir -p "$INSTALL_DIR"
+        cd "$INSTALL_DIR"
+        curl -L -o "$INSTALL_PATH" "$SOURCE_URL"
+        chmod +x "$INSTALL_PATH"
+    fi
+
+    bash -c "cd /var/www/symfony; $INSTALL_PATH $ARGS"
+fi

@@ -40,3 +40,5 @@
 /composer.phar
 app/data/mysql
 app/data/redis
+.env
+*.iml

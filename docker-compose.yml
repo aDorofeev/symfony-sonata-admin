@@ -1,59 +1,35 @@
-version: '2'
-
-volumes:
-    symfony_logs:
-        driver: local
-    symfony_cache:
-        driver: local
-    nginx_logs:
-        driver: local
-    mysql_data:
-        driver: local
-    redis_data:
-        driver: local
+version: '3'
 
 services:
-    # workaround for docker issue https://github.com/docker/docker/issues/2259
+    # data container is a workaround for docker issue: https://github.com/docker/docker/issues/2259
     data:
-        image: debian:jessie
+        image: bitnami/minideb:jessie
         volumes:
-            - .:/var/www/symfony
-#            - symfony_logs:/var/www/symfony/app/logs
-#            - symfony_cache:/var/www/symfony/app/cache
-            - ./app/data/mysql:/var/lib/mysql
-            - ./app/data/redis:/data
-        command: bash -c "chown -R 1000:33 /var/www/symfony/app/cache; chown -R 1000:33 /var/www/symfony/app/logs; chown -R 999:999 /var/lib/mysql; chown -R 999:999 /data; sleep 30"
-        tty: true
-        stdin_open: true
+            - .:/var/www/symfony:rw
+            - ./app/data/mysql:/var/lib/mysql:rw
+            - ./app/data/redis:/data:rw
+            - ./app/data/nginx:/var/lib/nginx:rw
+        command: bash -c "chown -R 1000:33 /var/www/symfony/app/cache; chown -R 1000:33 /var/www/symfony/app/logs; chown -R 1000:33 /var/lib/nginx; chown -R 999:999 /var/lib/mysql; chown -R 999:999 /data; sleep 30"
     php:
         restart: always
         build: ./docker/php-fpm
         depends_on:
-            - data
-        volumes_from:
-            - data:rw
+          - data
         volumes:
-            - symfony_cache:/var/log/nginx
-        security_opt:
-            - seccomp:unconfined
+            - .:/var/www/symfony:rw
         tty: true
         stdin_open: true
-        networks:
-            - default
-        cap_add:
-            - SYS_PTRACE
     nginx:
         restart: always
         build: ./docker/nginx
         depends_on:
-            - data
-            - php
+          - data
+          - php
         expose:
             - 80
-        volumes_from:
-            - data:ro
-#        volumes:
-#            - nginx_logs:/var/log/nginx
+        volumes:
+            - .:/var/www/symfony:ro
+            - ./app/data/nginx:/var/lib/nginx:rw
         environment:
             - VIRTUAL_HOST=${VIRTUAL_HOST}
             - VIRTUAL_NETWORK=nginx-proxy
@@ -67,9 +43,9 @@ services:
         restart: always
         build: ./docker/mysql
         depends_on:
-            - data
-        volumes_from:
-            - data:rw
+          - data
+        volumes:
+            - ./app/data/mysql:/var/lib/mysql:rw
         expose:
             - 3306
         environment:
@@ -77,24 +53,17 @@ services:
             MYSQL_DATABASE: symfony
             MYSQL_USER: symfony
             MYSQL_PASSWORD: password
-        tty: true
-        stdin_open: true
-        networks:
-            - default
     redis:
         restart: always
         build: ./docker/redis
         depends_on:
           - data
-        volumes_from:
-          - data:rw
+        volumes:
+            - ./app/data/redis:/data:rw
         expose:
             - 6379
-        networks:
-            - default
 
 networks:
     proxy-tier:
         external:
             name: nginx-proxy
-
