@@ -40,4 +40,3 @@
 /composer.phar
 app/data/mysql
 app/data/redis
-app/data

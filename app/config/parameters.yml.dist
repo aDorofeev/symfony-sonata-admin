@@ -4,7 +4,7 @@
 parameters:
     database_host:     db
     database_port:     ~
-    database_name:     minelord
+    database_name:     symfony_sonata
     database_user:     root
     database_password: root
     # You should uncomment this if you want use pdo_sqlite
@@ -19,9 +19,3 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
-
-    rabbitmq.host: 'rabbit'
-    rabbitmq.port: 5672
-    rabbitmq.user: 'guest'
-    rabbitmq.password: 'guest'
-    rabbitmq.vhost: '/'

@@ -7,8 +7,6 @@ security:
             encode_as_base64: true
             iterations: 2
 
-    always_authenticate_before_granting: true
-
     acl:
         connection: default
 
@@ -39,12 +37,10 @@ security:
                 use_forward:    false
                 check_path:     /admin/login_check
                 failure_path:   null
-                default_target_path: /admin/dashboard
             logout:
                 path:           /admin/logout
                 target:         /admin/login
             anonymous:          true
-            switch_user: true
 
         main:
             pattern:             .*
@@ -55,10 +51,9 @@ security:
                 use_forward:    false
                 check_path:     /login_check
                 failure_path:   null
-                default_target_path: /
             logout:             true
             anonymous:          true
-            switch_user: true
+            #switch_user: true
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
